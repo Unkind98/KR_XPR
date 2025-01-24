@@ -1,0 +1,58 @@
+spriteTypes = {
+	spriteType = {
+		name = "GFX_decision_atomic"
+		texturefile = "gfx/xpr_lx/decision_atomic.png"
+	}
+	spriteType = {
+		name = "GFX_idea_mil_budget_0"
+		texturefile = "gfx/xpr_lx/mil_budget0.png"
+	}
+	spriteType = {
+		name = "GFX_idea_mil_budget_1"
+		texturefile = "gfx/xpr_lx/mil_budget1.png"
+	}
+	spriteType = {
+		name = "GFX_idea_mil_budget_basic"
+		texturefile = "gfx/xpr_lx/mil_budget2.png"
+	}
+	spriteType = {
+		name = "GFX_idea_mil_budget_3"
+		texturefile = "gfx/xpr_lx/mil_budget3.png"
+	}
+	spriteType = {
+		name = "GFX_idea_mil_budget_4"
+		texturefile = "gfx/xpr_lx/mil_budget4.png"
+	}
+	spriteType = {
+		name = "GFX_idea_civ_budget_0"
+		texturefile = "gfx/xpr_lx/civ_budget0.png"
+	}
+	spriteType = {
+		name = "GFX_idea_civ_budget_1"
+		texturefile = "gfx/xpr_lx/civ_budget1.png"
+	}
+	spriteType = {
+		name = "GFX_idea_civ_budget_basic"
+		texturefile = "gfx/xpr_lx/civ_budget2.png"
+	}
+	spriteType = {
+		name = "GFX_idea_civ_budget_3"
+		texturefile = "gfx/xpr_lx/civ_budget3.png"
+	}
+	spriteType = {
+		name = "GFX_idea_civ_budget_4"
+		texturefile = "gfx/xpr_lx/civ_budget4.png"
+	}
+	spriteType = {
+		name = "GFX_idea_xpr_lx_btr_oil"
+		texturefile = "gfx/xpr_lx/btr_oil.png"
+	}
+	spriteType = {
+		name = "GFX_idea_xpr_lx_btr_steel"
+		texturefile = "gfx/xpr_lx/btr_steel.png"
+	}
+	spriteType = {
+		name = "GFX_idea_btr_alloc"
+		texturefile = "gfx/xpr_lx/idea_btr_alloc.dds"
+	}
+}

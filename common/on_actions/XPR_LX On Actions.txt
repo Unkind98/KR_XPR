@@ -1,0 +1,50 @@
+on_actions = {
+
+	on_startup = {
+		effect = {
+			every_possible_country = {
+				if = {
+					limit = { is_ai = yes }
+					add_ideas = { mil_budget_ai civ_budget_ai }
+				}
+				else = {
+					add_ideas = { mil_budget_2 civ_budget_2 }
+				}
+			}
+		}
+	}
+	
+	on_daily = {
+		effect = {
+			every_country = {
+				if = {
+					limit = {
+						is_ai = yes
+						NOT = { has_idea = mil_budget_ai }
+						NOT = { has_idea = civ_budget_ai }
+					}
+					remove_ideas = {
+						mil_budget_0
+						mil_budget_1
+						mil_budget_2
+						mil_budget_3
+						mil_budget_4
+						civ_budget_0
+						civ_budget_1
+						civ_budget_2
+						civ_budget_3
+						civ_budget_4
+					}
+					if = {
+						limit = { NOT = { has_idea = mil_budget_ai } }
+						add_ideas = mil_budget_ai
+					}
+					if = {
+						limit = { NOT = { has_idea = civ_budget_ai } }
+						add_ideas = civ_budget_ai
+					}
+				}
+			}
+		}
+	}
+}
