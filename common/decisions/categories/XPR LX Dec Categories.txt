@@ -1,0 +1,6 @@
+btr_program_decisions = {
+	allowed = { always = yes }
+	visible = { btr_calculation_trigger = yes }
+	visible_when_empty = yes
+	#scripted_gui = btr_program_gui
+}

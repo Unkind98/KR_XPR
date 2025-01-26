@@ -1,0 +1,53 @@
+political_actions = {
+	pbgr_debug = {
+		icon = SWI_consolidate_council_power
+		state_target = yes
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			has_global_flag = flag_31101998
+			OR = {
+				has_game_rule = { rule = population_based_garrison_requirements option = PBGR }
+				has_game_rule = { rule = population_based_garrison_requirements option = PBGR_VISIBLE }
+			}
+		}
+		target_trigger = {
+			FROM = {
+				NOT = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible } }
+				has_resistance = yes
+			}
+		}
+		complete_effect = {
+			if = {
+				limit = { FROM = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement } } }
+				FROM = {
+					remove_dynamic_modifier = { modifier = state_based_population_garrison_requirement }
+					add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+				}
+			}
+			else_if = {
+				limit = { FROM = { has_dynamic_modifier = { modifier = PBGR_debug } } }
+				FROM = {
+					remove_dynamic_modifier = { modifier = PBGR_debug }
+					add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+				}
+			}
+			else = {
+				FROM = {
+					add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+				}
+			}
+			xpr_turn_off_debug =  yes
+		}
+	}
+	pbgr_force_visibility = {
+		icon = SWI_consolidate_council_power
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			has_global_flag = flag_31101998
+		}
+		cost = 0
+		complete_effect = { set_global_flag = global_force_PBGR_visible }
+	}
+}

@@ -1,0 +1,527 @@
+political_actions = {
+	
+	xpr_lx_debug_decision = {
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			has_global_flag = flag_31101998
+		}
+		available = {
+			always = yes
+		}
+		cost = 0
+		complete_effect = {
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			set_country_flag = hired_tank_designer
+			add_ideas = { tank_designer }
+			xpr_turn_off_debug = yes
+		}
+	}
+	
+	nep_not_ai = {
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			OR = {
+				has_idea = mil_budget_ai
+				has_idea = civ_budget_ai
+			}
+		}
+		cost = 0
+		complete_effect = {
+			if = {
+				limit = { has_idea = mil_budget_ai }
+				swap_ideas = { remove_idea = mil_budget_ai add_idea = mil_budget_2 }
+			}
+			if = {
+				limit = { has_idea = civ_budget_ai }
+				swap_ideas = { remove_idea = civ_budget_ai add_idea = civ_budget_2 }
+			}
+		}
+	}
+	nep_is_ai = {
+		allowed = { always = yes }
+		activation = {
+			is_ai = yes
+			NOT = {
+				has_idea = mil_budget_ai
+				has_idea = civ_budget_ai
+			}
+		}
+		days_mission_timeout = 7
+		is_good = yes
+		complete_effect = {
+			remove_non_ai_nep = yes
+			add_ideas = { mil_budget_ai civ_budget_ai }
+		}
+	}
+	nep_mil_cut_budget0 = {
+		icon = generic_decision
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			NOT = { has_idea = mil_budget_0 }
+			OR = {
+				has_political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_war_support > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { mil_budget_0 } }
+	}
+	nep_mil_cut_budget1 = {
+		icon = generic_decision
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			NOT = {
+				has_idea = mil_budget_0
+				has_idea = mil_budget_1
+			}
+			OR = {
+				has_political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_war_support > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { mil_budget_1 } }
+	}
+	nep_mil_restore = {
+		icon = generic_decision
+		allowed = { always = yes }
+		activation = {
+			is_ai = no
+			OR = {
+				has_idea = mil_budget_0
+				has_idea = mil_budget_1
+			}
+			OR = {
+				has_war_support < 0.1
+				has_war = yes
+			}
+			has_political_power > 0
+		}
+    cancel_trigger = {
+      OR = {
+        has_war_support > 0.1
+				NOT = { 
+          has_idea = mil_budget_0
+				  has_idea = mil_budget_1
+        }
+      }
+    }
+		selectable_mission = yes
+		cost = 80
+		is_good = no
+		days_mission_timeout = 120
+		timeout_effect = {
+			if = {
+				limit = { has_idea = mil_budget_0 }
+				swap_ideas = {
+					remove_idea = mil_budget_0
+					add_idea = mil_budget_2
+				}
+				add_political_power = -60
+			}
+			else_if = {
+				swap_ideas = {
+					remove_idea = mil_budget_1
+					add_idea = mil_budget_2
+				}
+				add_political_power = -45
+			}
+			else = { add_political_power = -5 }
+		}
+		complete_effect = {
+			if = {
+				limit = { has_idea = mil_budget_0 }
+				swap_ideas = {
+					remove_idea = mil_budget_0
+					add_idea = mil_budget_2
+				}
+				if = { limit = { has_political_power < -19 }
+          add_political_power = 20
+        }
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = mil_budget_1
+					add_idea = mil_budget_2
+				}
+				if = { limit = { has_political_power < -34 }
+          add_political_power = 35
+        }
+			}
+		}
+	}
+	nep_civ_cut_budget0 = {
+		icon = generic_decision
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			NOT = { has_idea = civ_budget_0 }
+			OR = {
+				has_political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_stability > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { civ_budget_0 } }
+	}
+	nep_civ_cut_budget1 = {
+		icon = generic_decision
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			NOT = {
+				has_idea = civ_budget_0
+				has_idea = civ_budget_1
+			}
+			OR = {
+				has_political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_stability > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { civ_budget_1 } }
+	}
+	nep_civ_restore = {
+		icon = generic_decision
+		allowed = { always = yes }
+		activation = {
+			is_ai = no
+			OR = {
+				has_idea = civ_budget_0
+				has_idea = civ_budget_1
+			}
+			OR = {
+				has_stability < 0.1
+				has_war = yes
+			}
+			has_political_power > 0
+		}
+    cancel_trigger = {
+      OR = {
+        has_stability > 0.1
+				NOT = {
+          has_idea = civ_budget_0
+				  has_idea = civ_budget_1
+        }
+      }
+    }
+		available = { always = yes }
+		selectable_mission = yes
+		cost = 80
+		is_good = no
+		days_mission_timeout = 120
+		timeout_effect = {
+			if = {
+				limit = { has_idea = civ_budget_0 }
+				swap_ideas = {
+					remove_idea = civ_budget_0
+					add_idea = civ_budget_2
+				}
+				add_political_power = -60
+			}
+			else_if = {
+				swap_ideas = {
+					remove_idea = civ_budget_1
+					add_idea = civ_budget_2
+				}
+				add_political_power = -45
+			}
+			else = { add_political_power = -5 }
+		}
+		complete_effect = {
+			if = {
+				limit = { has_idea = civ_budget_0 }
+				swap_ideas = {
+					remove_idea = civ_budget_0
+					add_idea = civ_budget_2
+				}
+				if = { limit = { has_political_power  < -19 }
+          add_political_power = 20
+        }
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = civ_budget_1
+					add_idea = civ_budget_2
+				}
+				if = { limit = { has_political_power < -34 }
+          add_political_power = 35
+        }
+			}
+		}
+	}
+}
+
+economy_decisions = {
+	ntf_advancement = {
+		icon = atomic
+		allowed = { always = no }
+		cancel_trigger = {
+			#custom_trigger_tooltip = {
+				NOT = { has_idea = nuclear_test_facility }
+			#	tooltip = ntf_advancement_cancel_tt
+			#}
+		}
+		fire_only_once = no
+		days_mission_timeout = 7
+		is_good = yes
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = nuclear_test_facility
+				add_idea = nuclear_test_facility_x
+			}
+		}
+	}
+	it_facility_contract_raise = {
+		icon = generic_research
+		allowed = { always = yes }
+		visible = {
+			OR = {
+				has_idea = it_facility
+				has_idea = it_facility_x
+			}
+		}
+		available = { amount_research_slots < 11 }
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			if = { # adding res slot
+				limit = { check_variable = { xpr_lx_var_num_of_aux_rslot > 0 } }
+				add_research_slot = 1
+				add_to_variable = {
+					var = xpr_lx_var_it_facility_cost
+					value = 5
+					tooltip = it_facility_aux_rslot_raise
+				}
+				add_to_variable = { xpr_lx_var_num_of_aux_rslot = 1 }
+			}
+			else_if = {
+				limit = { check_variable = { xpr_lx_var_num_of_con_rslot > 0 } }
+				add_research_slot = 1
+				substract_from_variable = {
+					var = xpr_lx_var_it_facility_buff
+					value = 0.05
+					tooltip = it_facility_con_rslot_raise
+				}
+				substract_from_variable = { xpr_lx_var_num_of_con_rslot = 1 }
+			}
+			else = { add_five_ic_on_random_states = yes }
+		}
+	}
+	it_facility_contract_lower = {
+		icon = generic_research
+		allowed = { always = yes }
+		visible = { has_idea = it_facility }
+		available = { amount_research_slots > 1 }
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			if = {
+				limit = {
+					check_variable = { xpr_lx_var_num_of_aux_rslot = 1 }
+					check_variable = { xpr_lx_var_num_of_con_rslot < 1 }
+				}
+				add_research_slot = -1
+				add_to_variable = {
+					var = xpr_lx_var_it_facility_buff
+					value = 0.05
+					tooltip = it_facility_con_rslot_raise
+				}
+				add_to_variable = { xpr_lx_var_num_of_con_rslot = 1 }
+			}
+			else_if = { # adding res slot
+				limit = { check_variable = { xpr_lx_var_num_of_aux_rslot > 0 } }
+				add_research_slot = -1
+				subtract_from_variable = {
+					var = xpr_lx_var_it_facility_cost
+					value = 5
+					tooltip = it_facility_aux_rslot_lower
+				}
+				subtract_from_variable = { xpr_lx_var_num_of_aux_rslot = 1 }
+			}
+			else_if = {
+				limit = { check_variable = { xpr_lx_var_num_of_con_rslot > 0 } }
+				add_research_slot = -1
+				add_to_variable = {
+					var = xpr_lx_var_it_facility_buff
+					value = 0.05
+					tooltip = it_facility_con_rslot_raise
+				}
+				add_to_variable = { xpr_lx_var_num_of_con_rslot = 1 }
+			}
+			else = { add_five_ic_on_random_states = yes }
+		}
+	}
+
+	btr_full_debug = {
+		allowed = { always = yes }
+		visible = { is_ai = no has_global_flag = flag_31101998 }
+		state_target = yes
+		target_trigger = {
+			FROM = {
+				is_capital = no
+				state_is_city_category = yes
+			}
+		}
+		cost = 0
+		complete_effect = { FROM.FROM = { country_event = xpr_lx_event.15327 } }
+	}
+	btr_hotfix = {
+		allowed = { always = yes }
+		visible = {
+			OR = {
+				has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost }
+				has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost }
+			}
+			NOT = { has_dynamic_modifier = xpr_lx_dynmod_btr_resources_cost }
+		}
+		available = { always = yes }
+		cost = 0
+		complete_effect = {
+			btr_calculation = yes
+			set_temp_variable = { btr_hotfix_comp = 0 }
+			if = {
+				limit = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost } }
+				remove_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost }
+				add_to_temp_variable = { btr_hotfix_comp = 100 }
+			}
+			if = {
+				limit = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost } }
+				remove_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost }
+				add_to_temp_variable = { btr_hotfix_comp = 100 }
+			}
+			add_political_power = btr_hotfix_comp
+			add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_resources_cost }
+			btr_calculation = yes
+		}
+	}
+	
+	btr_oil_activation = {
+		icon = oil
+		allowed = { always = yes }
+		visible = {
+			btr_oil_ready = yes
+			NOT = { has_idea = xpr_lx_btr_oil }
+		}
+		available = { NOT = { has_country_flag = xpr_lx_cflag_btr_oil_cooldown } }
+		cost = 100
+		complete_effect = {
+			add_ideas = xpr_lx_btr_oil
+			if = {
+				limit = { NOT = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_resources_cost } } }
+				add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_resources_cost }
+			}
+			else = { custom_effect_tooltip = btr_oil_activation_tt }
+			btr_calculation = yes
+		}
+	}
+	btr_oil_deactivation = {
+		icon = oil
+		allowed = { always = yes }
+		visible = { has_idea = xpr_lx_btr_oil }
+		available = { always = yes }
+		cost = 0
+		complete_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_oil_cooldown days = 30 }
+			remove_ideas = { xpr_lx_btr_oil }
+			btr_calculation = yes
+		}
+	}
+	btr_oil_suspension = {
+		icon = oil
+		allowed = { always = yes }
+		days_mission_timeout = 30
+		activation = {
+			btr_oil_ready = no
+			has_idea = xpr_lx_btr_oil
+		}
+		available = { btr_oil_ready = yes }
+		visible = {
+			btr_oil_ready = no
+			has_idea = xpr_lx_btr_oil
+		}
+		cancel_if_not_visible = yes
+
+		is_good = no
+		timeout_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_oil_cooldown days = 30 }
+			remove_ideas = { xpr_lx_btr_oil }
+			btr_calculation = yes
+		}
+		complete_effect = {
+			custom_effect_tooltip = btr_oil_activation_tt
+			btr_calculation = yes
+		}
+	}
+	
+	btr_steel_activation = {
+		icon = steel
+		allowed = { always = yes }
+		visible = {
+			btr_steel_ready = yes
+			NOT = { has_idea = xpr_lx_btr_steel }
+		}
+		available = { NOT = { has_country_flag = xpr_lx_cflag_btr_steel_cooldown } }
+		cost = 100
+		complete_effect = {
+			add_ideas = xpr_lx_btr_steel
+			if = {
+				limit = { NOT = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_resources_cost } } }
+				add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_resources_cost }
+			}
+			else = { custom_effect_tooltip = btr_steel_activation_tt }
+			btr_calculation = yes
+		}
+	}
+	btr_steel_deactivation = {
+		icon = steel
+		allowed = { always = yes }
+		visible = { has_idea = xpr_lx_btr_steel }
+		available = { always = yes }
+		cost = 0
+		complete_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_steel_cooldown days = 30 }
+			remove_ideas = { xpr_lx_btr_steel }
+			btr_calculation = yes
+		}
+	}
+	btr_steel_suspension = {
+		icon = steel
+		allowed = { always = yes }
+		days_mission_timeout = 30
+		activation = {
+			btr_steel_ready = no
+			has_idea = xpr_lx_btr_steel
+		}
+		available = { btr_steel_ready = yes }
+		visible = {
+			btr_steel_ready = no
+			has_idea = xpr_lx_btr_steel
+		}
+		cancel_if_not_visible = yes
+
+		is_good = no
+		timeout_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_steel_cooldown days = 30 }
+			remove_ideas = { xpr_lx_btr_steel }
+			btr_calculation = yes
+		}
+		complete_effect = {
+			custom_effect_tooltip = btr_steel_activation_tt
+			btr_calculation = yes
+		}
+	}
+}

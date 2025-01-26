@@ -1,0 +1,130 @@
+@basePopulationAssumptionK = 2500 #assume 2,500,000 population as average-- based on western europe
+on_actions = { ##calculates on startup
+	on_startup = {
+		effect = {
+			if = {
+				limit = { has_game_rule = { rule = population_based_garrison_requirements option = PBGR } }
+				log = "PBGR Log: Invisible Rule"
+				every_state = {
+					set_variable = { PBGR_pop_factor = state_population_k }
+					divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+					subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+					add_dynamic_modifier = { modifier = state_based_population_garrison_requirement }
+					log = "PBGR Log: [THIS.GetID]([THIS.GetName]) gets PBGR_NORMAL"
+				}
+			}
+			if = {
+				limit = { has_game_rule = { rule = population_based_garrison_requirements option = PBGR_VISIBLE } }
+				log = "PBGR Log: Normal Rule"
+				every_state = {
+					if = {
+						limit = { has_resistance = yes }
+						set_variable = { PBGR_pop_factor = state_population_k }
+						divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+						subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+						add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+						#log = "PBGR Log: [THIS.GetID]([THIS.GetName]) gets PBGR_VISIBLE"
+						log = "PBGR Log: In [GetMonth] [GetYear], the calculated PBGR modifier for [THIS.GetID]([THIS.GetName]) is [?THIS.PBGR_pop_factor|=0.2%]"
+					}
+					else = {
+						#set_variable = { PBGR_pop_factor = state_population_k }
+						#divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+						#subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+						#add_dynamic_modifier = { modifier = state_based_population_garrison_requirement }
+						#log = "PBGR Log: [THIS.GetID]([THIS.GetName]) gets PBGR_NORMAL"
+						log = "PBGR Log: For [GetMonth] [GetYear], state [THIS.GetID]([THIS.GetName]) has no PBGR"
+					}
+				}
+			}
+		}
+	}
+	on_monthly = { #recalculates every month; mostly here in case you have mods that add/subtract large amount of population from states, since natural pop increases shouldn't matter on this scale
+		effect = {
+			if = {
+				limit = { has_game_rule = { rule = population_based_garrison_requirements option = PBGR } }
+				set_variable = { PBGR_pop_factor = state_population_k }
+				divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+				subtract_from_variable = { PBGR_pop_factor = 1 }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_game_rule = { rule = population_based_garrison_requirements option = PBGR_VISIBLE }
+						has_global_flag = global_force_PBGR_visible
+					}
+				}
+				every_state = {
+					set_variable = { PBGR_pop_factor = state_population_k }
+					divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+					subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+					
+					if = {
+						limit = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement } }
+						remove_dynamic_modifier = { modifier = state_based_population_garrison_requirement }
+					}
+					
+					if = {
+						limit = {
+							has_resistance = yes
+							NOT = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible } }
+						}
+						add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+						log = "PBGR Log: In [GetMonth] [GetYear], PBGR modifier is added for [THIS.GetID]([THIS.GetName]) by [?THIS.PBGR_pop_factor|=0.2%]"
+					}
+					else_if = {
+						limit = { has_resistance = yes }
+						log = "PBGR Log: In [GetMonth] [GetYear], the calculated PBGR modifier for [THIS.GetID]([THIS.GetName]) is [?THIS.PBGR_pop_factor|=0.2%]"
+					}
+					else_if = {
+						limit = {
+							has_resistance = no
+							has_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+						}
+						remove_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+						log = "PBGR Log: For [GetMonth] [GetYear], state [THIS.GetID]([THIS.GetName]) PBGR has removed"
+					}
+					else = { log = "PBGR Log: For [GetMonth] [GetYear], state [THIS.GetID]([THIS.GetName]) has no PBGR" }
+				}
+			}
+			else = { log = "PBGR Log: This game session doesn't have any of PBGR rules activated"}
+		}
+	}
+	#on_daily = 
+	on_state_control_changed = {
+		effect = {
+			if = {
+				limit = { 
+					has_game_rule = { rule = population_based_garrison_requirements option = PBGR_VISIBLE }
+					FROM.FROM = {
+						has_resistance = yes
+						NOT = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible } }
+					}
+				}
+				FROM.FROM = {
+					if = {
+						limit = { has_dynamic_modifier = { modifier = state_based_population_garrison_requirement } }
+						remove_dynamic_modifier = { modifier = state_based_population_garrison_requirement }
+						set_variable = { PBGR_pop_factor = state_population_k }
+						divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+						subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+						add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+					}
+					else_if = {
+						limit = { has_dynamic_modifier = { modifier = PBGR_debug } }
+						remove_dynamic_modifier = { modifier = PBGR_debug }
+						set_variable = { PBGR_pop_factor = state_population_k }
+						divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+						subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+						add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+					}
+					else = {
+						set_variable = { PBGR_pop_factor = state_population_k }
+						divide_variable = { PBGR_pop_factor = @basePopulationAssumptionK }
+						subtract_from_variable = { PBGR_pop_factor = 1 } #since modifiers add to the base, we would want a state double population to have a PBGR_pop_factor of 1, not of 2
+						add_dynamic_modifier = { modifier = state_based_population_garrison_requirement_visible }
+					}
+				}
+			}
+		}
+	}
+}

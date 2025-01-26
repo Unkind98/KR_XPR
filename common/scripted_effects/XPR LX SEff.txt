@@ -1,0 +1,210 @@
+xpr_turn_off_debug = {
+	clr_global_flag = flag_31101998
+	custom_effect_tooltip = flag_31101998_clr_tt
+}
+
+restore_ai_nep = {
+	remove_ideas = {
+		mil_budget_0
+		mil_budget_1
+		mil_budget_2
+		mil_budget_3
+		mil_budget_4
+		civ_budget_0
+		civ_budget_1
+		civ_budget_2
+		civ_budget_3
+		civ_budget_4
+	}
+	if = {
+		limit = { NOT = { has_idea = mil_budget_ai } }
+		add_ideas = mil_budget_ai
+	}
+	if = {
+		limit = { NOT = { has_idea = civ_budget_ai } }
+		add_ideas = civ_budget_ai
+	}
+}
+
+add_five_ic_on_random_states = {
+	random_owned_controlled_state = {
+		limit = {
+			is_core_of = ROOT
+			free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = no
+			}
+		}
+		add_building_construction = {
+			type = industrial_complex
+			#instant = yes
+			level = 1
+		}
+	}
+	random_owned_controlled_state = {
+		limit = {
+			is_core_of = ROOT
+			free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = no
+			}
+		}
+		add_building_construction = {
+			type = industrial_complex
+			#instant = yes
+			level = 1
+		}
+	}
+	random_owned_controlled_state = {
+		limit = {
+			is_core_of = ROOT
+			free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = no
+			}
+		}
+		add_building_construction = {
+			type = industrial_complex
+			#instant = yes
+			level = 1
+		}
+	}
+	random_owned_controlled_state = {
+		limit = {
+			is_core_of = ROOT
+			free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = no
+			}
+		}
+		add_building_construction = {
+			type = industrial_complex
+			#instant = yes
+			level = 1
+		}
+	}
+	random_owned_controlled_state = {
+		limit = {
+			is_core_of = ROOT
+			free_building_slots = {
+				building = industrial_complex
+				size > 0
+				include_locked = no
+			}
+		}
+		add_building_construction = {
+			type = industrial_complex
+			#instant = yes
+			level = 1
+		}
+	}
+}
+remove_non_ai_nep = {
+	#if = { limit = { has_idea = X } remove_ideas = X }
+	remove_ideas = {
+		mil_budget_0
+		mil_budget_1
+		mil_budget_2
+		mil_budget_3
+		mil_budget_4
+		arsenal_expansion
+		mil_mass_prod
+		proper_officers_salary
+		mil_ac_subsidiary
+		
+		civ_budget_0
+		civ_budget_1
+		civ_budget_2
+		civ_budget_3
+		civ_budget_4
+		anti_corruption_program
+		customs_supervision
+		prosperity_program
+		education_program
+	}
+}
+btr_calculation = {
+	if = {
+		limit = { check_variable = { party_popularity@ruling_party > 0.5 } }
+		set_variable = { xpr_lx_var_btr_cost_modifier = 0.2 }
+		set_variable = { xpr_lx_var_btr_cost_modifier_actual = 1 }
+		subtract_from_variable = { xpr_lx_var_btr_cost_modifier_actual = xpr_lx_var_btr_cost_modifier }
+	}
+	else = {
+		set_variable = { xpr_lx_var_btr_cost_modifier = party_popularity@ruling_party }
+		#subtract_from_variable = { xpr_lx_var_btr_cost_modifier = party_popularity@ruling_party }
+		multiply_variable = { xpr_lx_var_btr_cost_modifier = 2 }
+		divide_variable = { xpr_lx_var_btr_cost_modifier = 5 }
+		set_variable = { xpr_lx_var_btr_cost_modifier_actual = 1 }
+		subtract_from_variable = { xpr_lx_var_btr_cost_modifier_actual = xpr_lx_var_btr_cost_modifier }
+	}
+	#log = "BTR Calc Log: BTR Cost Modifier = [?party_popularity@ruling_party|.2%]"
+	
+	set_variable = { xpr_lx_var_btr_oil_cost = num_of_civilian_factories_available_for_projects }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 1- = [?current_oil_calc]"
+	add_to_variable = { xpr_lx_var_btr_oil_cost = num_of_military_factories }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 2- = [?current_oil_calc]"
+	add_to_variable = { xpr_lx_var_btr_oil_cost = num_of_naval_factories }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 3- = [?current_oil_calc]"
+	divide_variable = { xpr_lx_var_btr_oil_cost = 3 }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 4- = [?current_oil_calc]"
+	multiply_variable = { xpr_lx_var_btr_oil_cost = xpr_lx_var_btr_cost_modifier_actual }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 5- = [?current_oil_calc]"
+	add_to_variable = { xpr_lx_var_btr_oil_cost = 0.5 }
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 6- = [?current_oil_calc]"
+	round_variable = xpr_lx_var_btr_oil_cost
+	set_temp_variable = { current_oil_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Oil Cost -step 7- = [?current_oil_calc]"
+	set_variable = { xpr_lx_var_btr_oil_check = xpr_lx_var_btr_oil_cost }
+	multiply_variable = { xpr_lx_var_btr_oil_check = -1 }
+	
+	set_variable = { xpr_lx_var_btr_steel_cost = num_of_civilian_factories_available_for_projects }
+	set_temp_variable = { current_steel_calc = xpr_lx_var_btr_oil_cost }
+	#log = "BTR Calc Log: BTR Steel Cost -step 1- = [?current_steel_calc]"
+	multiply_variable = { xpr_lx_var_btr_steel_cost = 1.2 }
+	set_temp_variable = { current_steel_calc = xpr_lx_var_btr_steel_cost }
+	#log = "BTR Calc Log: BTR Steel Cost -step 2- = [?current_steel_calc]"
+	multiply_variable = { xpr_lx_var_btr_steel_cost = xpr_lx_var_btr_cost_modifier_actual }
+	set_temp_variable = { current_steel_calc = xpr_lx_var_btr_steel_cost }
+	#log = "BTR Calc Log: BTR Steel Cost -step 3- = [?current_steel_calc]"
+	add_to_variable = { xpr_lx_var_btr_steel_cost = 0.5 }
+	set_temp_variable = { current_steel_calc = xpr_lx_var_btr_steel_cost }
+	#log = "BTR Calc Log: BTR Steel Cost -step 4- = [?current_steel_calc]"
+	round_variable = xpr_lx_var_btr_steel_cost
+	set_temp_variable = { current_steel_calc = xpr_lx_var_btr_steel_cost }
+	#log = "BTR Calc Log: BTR Steel Cost -step 5- = [?current_steel_calc]"
+	set_variable = { xpr_lx_var_btr_steel_check = xpr_lx_var_btr_steel_cost }
+	multiply_variable = { xpr_lx_var_btr_steel_check = -1 }
+	
+	set_variable = { xpr_lx_var_btr_aluminium_cost = num_of_military_factories }
+	divide_variable = { xpr_lx_var_btr_aluminium_cost = 5 }
+	multiply_variable = { xpr_lx_var_btr_aluminium_cost = xpr_lx_var_btr_cost_modifier_actual }
+	add_to_variable = { xpr_lx_var_btr_aluminium_cost = 0.5 }
+	round_variable = xpr_lx_var_btr_aluminium_cost
+	
+	if = {
+		limit = { has_idea = xpr_lx_btr_oil }
+		set_variable = { xpr_lx_var_btr_oil_cost_active = xpr_lx_var_btr_oil_cost }
+	}
+	else = {
+		set_variable = { xpr_lx_var_btr_oil_cost_active = 0 }
+	}
+	
+	if = {
+		limit = { has_idea = xpr_lx_btr_steel }
+		set_variable = { xpr_lx_var_btr_steel_cost_active = xpr_lx_var_btr_steel_cost }
+	}
+	else = {
+		set_variable = { xpr_lx_var_btr_steel_cost_active = 0 }
+	}
+}

@@ -73,10 +73,6 @@
  mil_budget_2: "Normal Military Budget"
  mil_budget_3: "Moderate Military Budget"
  mil_budget_4: "Excess Military Budget"
- arsenal_expansion: "Arsenal Expansion"
- mil_mass_prod: "Mass Production"
- proper_officers_salary: "Proper Officers Salary"
- mil_ac_subsidiary: "Military Academy Subsidiary"
  
  # NEP Civilian
  civ_budget_0: "Improvished Civilian Budget"
@@ -84,11 +80,18 @@
  civ_budget_2: "Normal Civilian Budget"
  civ_budget_3: "Pleasant Civilian Budget"
  civ_budget_4: "Generous Civilian Budget"
- anti_corruption_bureau: "Corruption Eradication Commission"
+ 
+ # Extension Policies
+ ext_pol: "Extension Policies"
+ arsenal_expansion: "Arsenal Expansion"
+ mil_mass_prod: "Mass Production"
+ proper_officers_salary: "Proper Officers Salary"
+ mil_ac_subsidiary: "Military Academy Subsidiary"
+ anti_corruption_buerau: "Corruption Eradication Commission"
  customs_supervision: "Customs Supervision"
  prosperity_program: "Life Improvement Program"
  education_program: "Education and Research Fund"
- 
+
  # DESIGNERS
  tank_designer: "Tank Design Bureau"
  ship_designer: "Ship Design Bureau"

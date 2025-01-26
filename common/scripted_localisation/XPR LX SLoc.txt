@@ -1,0 +1,24 @@
+defined_text = {
+	name = it_facility_contract_raise_desc_sloc 
+	text = {
+		trigger = { check_variable = { xpr_lx_var_num_of_aux_rslot > 0 } }
+		localization_key = it_facility_contract_raise_aux
+	}
+	text = {
+		trigger = { check_variable = { xpr_lx_var_num_of_con_rslot > 0 } }
+		localization_key = it_facility_contract_raise_con
+	}
+	text = { localization_key = it_facility_contract_raise }
+}
+defined_text = {
+	name = it_facility_contract_lower_desc_sloc 
+	text = {
+		trigger = { check_variable = { xpr_lx_var_num_of_aux_rslot > 0 } }
+		localization_key = it_facility_contract_lower_aux
+	}
+	text = {
+		trigger = { check_variable = { xpr_lx_var_num_of_con_rslot > 0 } }
+		localization_key = it_facility_contract_lower_con
+	}
+	text = { localization_key = it_facility_contract_lower }
+}

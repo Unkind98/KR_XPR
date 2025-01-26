@@ -1,0 +1,388 @@
+political_actions = {
+	nep_not_ai = {
+		allowed = { always = yes }
+		visible = {
+			is_ai = no
+			OR = {
+				has_idea = mil_budget_ai
+				has_idea = civ_budget_ai
+			}
+		}
+		cost = 0
+		complete_effect = {
+			if = {
+				limit = { has_idea = mil_budget_ai }
+				swap_ideas = { remove_idea = mil_budget_ai add_idea = mil_budget_2 }
+			}
+			if = {
+				limit = { has_idea = civ_budget_ai }
+				swap_ideas = { remove_idea = civ_budget_ai add_idea = civ_budget_2 }
+			}
+		}
+	}
+	nep_is_ai = {
+		allowed = { always = yes }
+		activation = {
+			is_ai = yes
+			NOT = {
+				has_idea = mil_budget_ai
+				has_idea = civ_budget_ai
+			}
+		}
+		days_mission_timeout = 7
+		is_good = yes
+		complete_effect = {
+			remove_non_ai_nep = yes
+			add_ideas = { mil_budget_ai civ_budget_ai }
+		}
+	}
+	nep_mil_cut_budget0 = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		visible = {
+			NOT = { has_idea = mil_budget_0 }
+			OR = {
+				political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_war_support > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { mil_budget_0 } }
+	}
+	nep_mil_cut_budget1 = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		visible = {
+			NOT = {
+				has_idea = mil_budget_0
+				has_idea = mil_budget_1
+			}
+			OR = {
+				political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_war_support > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { mil_budget_1 } }
+	}
+	nep_mil_restore = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		activation = {
+			OR = {
+				has_idea = mil_budget_0
+				has_idea = mil_budget_1
+			}
+			OR = {
+				has_war_support < 0
+				has_war = yes
+			}
+			political_power > 0
+		}
+		available = { always = yes }
+		selectable_mission = yes
+		cost = 80
+		is_good = no
+		days_mission_timeout = 120
+		timeout_effect = {
+			if = {
+				limit = { has_idea = mil_budget_0 }
+				swap_ideas = {
+					remove_idea = mil_budget_0
+					add_idea = mil_budget_2
+				}
+				add_political_power = -60
+			}
+			else_if = {
+				swap_ideas = {
+					remove_idea = mil_budget_1
+					add_idea = mil_budget_2
+				}
+				add_political_power = -45
+			}
+			else = { add_political_power = -5 }
+		}
+		complete_effect = {
+			if = {
+				limit = { has_idea = mil_budget_0 }
+				swap_ideas = {
+					remove_idea = mil_budget_0
+					add_idea = mil_budget_2
+				}
+				add_political_power = 20
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = mil_budget_1
+					add_idea = mil_budget_2
+				}
+				add_political_power = 35
+			}
+		}
+	}
+	nep_civ_cut_budget0 = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		visible = {
+			NOT = { has_idea = civ_budget_0 }
+			OR = {
+				political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_stability > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { civ_budget_0 } }
+	}
+	nep_civ_cut_budget1 = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		visible = {
+			NOT = {
+				has_idea = civ_budget_0
+				has_idea = civ_budget_1
+			}
+			OR = {
+				political_power < 0
+				political_power_daily < 0
+			}
+		}
+		available = { has_stability > 0 }
+		cost = 0
+		complete_effect = { add_ideas = { civ_budget_1 } }
+	}
+	nep_civ_restore = {
+		icon = generic_decision
+		allowed = { is_ai = no }
+		activation = {
+			OR = {
+				has_idea = civ_budget_0
+				has_idea = civ_budget_1
+			}
+			OR = {
+				has_stability < 0
+				has_war = yes
+			}
+			political_power > 0
+		}
+		available = { always = yes }
+		selectable_mission = yes
+		cost = 80
+		is_good = no
+		days_mission_timeout = 120
+		timeout_effect = {
+			if = {
+				limit = { has_idea = civ_budget_0 }
+				swap_ideas = {
+					remove_idea = civ_budget_0
+					add_idea = civ_budget_2
+				}
+				add_political_power = -60
+			}
+			else_if = {
+				swap_ideas = {
+					remove_idea = civ_budget_1
+					add_idea = civ_budget_2
+				}
+				add_political_power = -45
+			}
+			else = { add_political_power = -5 }
+		}
+		complete_effect = {
+			if = {
+				limit = { has_idea = civ_budget_0 }
+				swap_ideas = {
+					remove_idea = civ_budget_0
+					add_idea = civ_budget_2
+				}
+				add_political_power = 20
+			}
+			else = {
+				swap_ideas = {
+					remove_idea = civ_budget_1
+					add_idea = civ_budget_2
+				}
+				add_political_power = 35
+			}
+		}
+	}
+}
+
+economy_decisions = {
+	ntf_advancement = {
+		icon = atomic
+		allowed = { always = no }
+		cancel_trigger = {
+			#custom_trigger_tooltip = {
+				NOT = { has_idea = nuclear_test_facility }
+			#	tooltip = ntf_advancement_cancel_tt
+			#}
+		}
+		fire_only_once = no
+		days_mission_timeout = 7
+		is_good = yes
+		complete_effect = {
+			swap_ideas = {
+				remove_idea = nuclear_test_facility
+				add_idea = nuclear_test_facility_x
+			}
+		}
+	}
+	it_facility_res_slot_raise = {
+		icon = generic_research
+		allowed = { always = yes }
+		visible = { has_it_facility_contract = yes }
+		available = { amount_research_slots < 11 }
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			add_research_slot = 1
+			it_facility_level_raise = yes
+		}
+	}
+	it_facility_res_slot_lower = {
+		icon = generic_research
+		allowed = { always = yes }
+		visible = { has_it_facility_contract = yes }
+		available = { amount_research_slots > 3 }
+		cost = 100
+		days_re_enable = 180
+		complete_effect = {
+			add_research_slot = -1
+			if = {
+				limit = { has_idea = it_facility }
+				add_to_variable = { xpr_lx_var_it_facility_buff_factor = 0.02 }
+				custom_effect_tooltip = xpr_lx_var_it_facility_buff_factor_tt
+				#add_to_variable = { xpr_lx_var_it_facility_cost_factor = 5 }
+				#custom_effect_tooltip = xpr_lx_var_it_facility_cost_factor_tt
+				add_dynamic_modifier = { modifier = it_facility_res_slot_dynmod }
+				#add_five_ic_on_random_states = yes
+			}
+			else = { it_facility_level_lower = yes }
+		}
+	}
+	
+	
+}
+
+btr_program_decisions = {
+	btr_full_debug = {
+		allowed = { is_ai = no }
+		visible = { has_global_flag = flag_31101998 }
+		state_target = yes
+		target_trigger = {
+			FROM = {
+				is_capital = no
+				state_is_city_category = yes
+			}
+		}
+		cost = 0
+		complete_effect = { FROM.FROM = { country_event = xpr_lx_event.15327 } }
+	}
+	btr_oil_activation = {
+		icon = oil
+		allowed = { always = yes }
+		visible = { btr_oil_ready = yes }
+		state_target = any_owned_state
+		target_array = core_states
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				has_any_btr_dyn_mod = no
+				state_is_oil_ready =  yes
+			}
+		}
+		available = { NOT = { has_country_flag = xpr_lx_cflag_btr_oil_cooldown } }
+		cost = 100
+		remove_effect = {
+			add_ideas = { xpr_lx_idea_btr_oil }
+			FROM = { add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost } } #scope = THIS } }
+			#add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost }
+		}
+	}
+	btr_oil_deactivation = {
+		icon = oil
+		allowed = { always = yes }
+		visible = { has_idea = xpr_lx_idea_btr_oil }
+		available = { always = yes }
+		cost = 0
+		remove_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_oil_cooldown days = 30 }
+			remove_ideas = { xpr_lx_idea_btr_oil }
+		}
+	}
+	btr_oil_debug_dynmod_activeness = {
+		icon = eng_trade_unions_demand
+		allowed = { is_ai = no }
+		visible = { has_global_flag = flag_31101998 }
+		state_target = yes
+		target_trigger = { FROM = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost } } }
+		state_target = any_controlled_state
+		target_array = core_states
+		target_trigger = { FROM = { has_any_btr_dyn_mod = yes } }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = btr_oil_debug_dynmod_activeness_tt
+				set_temp_variable = { btr_oil_recheck = FROM.FROM.xpr_lx_var_btr_oil_cost }
+				multiply_temp_variable = { btr_oil_recheck = -1 }
+				check_variable = { btr_oil_recheck > FROM.FROM.resource@oil }
+			}
+		}
+		cost = 0
+		complete_effect = { xpr_turn_off_debug = yes }
+	}
+	btr_steel_activation = {
+		icon = steel
+		allowed = { always = yes }
+		visible = { btr_steel_ready = yes }
+		state_target = any_owned_state
+		target_array = core_states
+		target_trigger = {
+			FROM = {
+				is_controlled_by = ROOT
+				has_any_btr_dyn_mod = no
+				state_is_steel_ready =  yes
+			}
+		}
+		available = { NOT = { has_country_flag = xpr_lx_cflag_btr_steel_cooldown } }
+		cost = 100
+		remove_effect = {
+			add_ideas = { xpr_lx_idea_btr_steel }
+			FROM = { add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost } } #scope = THIS } }
+			#add_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost }
+		}
+	}
+	btr_steel_deactivation = {
+		icon = steel
+		allowed = { always = yes }
+		visible = { has_idea = xpr_lx_idea_btr_steel }
+		available = { always = yes }
+		cost = 0
+		remove_effect = {
+			set_country_flag = { flag = xpr_lx_cflag_btr_steel_cooldown days = 30 }
+			remove_ideas = { xpr_lx_idea_btr_steel }
+		}
+	}
+	btr_steel_debug_dynmod_activeness = {
+		icon = eng_trade_unions_demand
+		allowed = { is_ai = no }
+		visible = { has_global_flag = flag_31101998 }
+		state_target = yes
+		target_trigger = { FROM = { has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost } } }
+		state_target = any_controlled_state
+		target_array = core_states
+		target_trigger = { FROM = { has_any_btr_dyn_mod = yes } }
+		available = {
+			custom_trigger_tooltip = {
+				tooltip = btr_steel_debug_dynmod_activeness_tt
+				set_temp_variable = { btr_steel_recheck = FROM.FROM.xpr_lx_var_btr_steel_cost }
+				multiply_temp_variable = { btr_steel_recheck = -1 }
+				check_variable = { btr_steel_recheck > FROM.FROM.resource@steel }
+			}
+		}
+		cost = 0
+		complete_effect = { xpr_turn_off_debug = yes }
+	}
+}

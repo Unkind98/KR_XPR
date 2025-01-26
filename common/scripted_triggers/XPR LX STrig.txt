@@ -1,0 +1,84 @@
+state_is_city_category = {
+	if = {
+		#checks if is a capital
+		limit = { is_capital = yes }
+		custom_trigger_tooltip = {
+			tooltip = TRIGGER_IS_CAPITAL
+			always = yes 
+		}
+	}
+	else = {
+		infrastructure > 2
+		state_population_k > 200
+		custom_trigger_tooltip = {
+			tooltip = is_city_temp_var_tt
+			set_temp_variable = { is_city_temp_var = industrial_complex_level }
+			add_to_temp_variable = { is_city_temp_var = arms_factory_level }
+			check_variable = { is_city_temp_var > 4 }
+		}
+	}
+}
+has_it_facility_contract = {
+	OR = {
+		has_idea = it_facility
+		has_idea = it_facility_1
+		has_idea = it_facility_2
+		has_idea = it_facility_3
+		has_idea = it_facility_4
+		has_idea = it_facility_5
+		has_idea = it_facility_6
+		has_idea = it_facility_7
+	}
+}
+has_any_btr_dyn_mod = {
+	OR = {
+		#has_dynamic_modifier = { modifier =  }
+		has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_oil_cost }
+		has_dynamic_modifier = { modifier = xpr_lx_dynmod_btr_steel_cost }
+	}
+}
+btr_calculation_trigger = { has_idea = btr_alloc }
+btr_available = {
+	if = {
+		limit = {
+			set_temp_variable = { popularity_treshold = 1 }
+			divide_temp_variable = { popularity_treshold = 3 }
+			check_variable = { party_popularity@ruling_party > popularity_treshold }
+		}
+		has_stability > 0.33
+	}
+	else = { has_stability > 0.5 }
+}
+btr_oil_ready = {
+	has_idea = btr_alloc
+	if = {
+		limit = { has_idea = xpr_lx_btr_oil }
+		custom_trigger_tooltip = {
+			tooltip = btr_oil_check_tt
+			check_variable = { xpr_lx_var_btr_oil_check > resource@oil }
+		}
+	}
+	else = {
+		custom_trigger_tooltip = {
+			tooltip = btr_oil_ready_tt
+			check_variable = { xpr_lx_var_btr_oil_cost < resource@oil }
+		}
+	}
+}
+
+btr_steel_ready = {
+	has_idea = btr_alloc
+	if = {
+		limit = { has_idea = xpr_lx_btr_steel }
+		custom_trigger_tooltip = {
+			tooltip = btr_steel_check_tt
+			check_variable = { xpr_lx_var_btr_steel_check > resource@steel }
+		}
+	}
+	else = {
+		custom_trigger_tooltip = {
+			tooltip = btr_steel_ready_tt
+			check_variable = { xpr_lx_var_btr_steel_cost < resource@steel }
+		}
+	}
+}

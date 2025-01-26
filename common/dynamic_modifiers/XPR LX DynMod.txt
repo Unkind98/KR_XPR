@@ -1,0 +1,31 @@
+xpr_lx_dynmod_it_facility = {
+    #icon = GFX_idea_jap_duplicate_research
+    remove_trigger = { NOT = { has_idea = it_facility } }
+	research_speed_factor = xpr_lx_var_it_facility_buff
+	civilian_factory_use  = xpr_lx_var_it_facility_cost
+	#custom_modifier_tooltip = it_facility_res_slot_dynmod_tt
+}
+xpr_lx_dynmod_btr_resources_cost = {
+	#icon = GFX_idea_btr_alloc
+	
+	remove_trigger = {
+		NOT = { has_idea = btr_alloc }
+	}
+	
+	country_resource_cost_oil = xpr_lx_var_btr_oil_cost_active
+	country_resource_cost_steel = xpr_lx_var_btr_steel_cost_active
+}
+
+xpr_lx_dynmod_btr_oil_cost = {
+	icon = GFX_idea_unknown
+	country_resource_cost_oil = xpr_lx_var_btr_oil_cost
+}
+xpr_lx_dynmod_btr_steel_cost = {
+	icon = GFX_idea_unknown
+	country_resource_cost_steel = xpr_lx_var_btr_steel_cost
+}
+
+PBGR_debug = {
+	icon = GFX_decision_unknown
+	required_garrison_factor = PBGR_pop_factor
+}

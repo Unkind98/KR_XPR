@@ -1,0 +1,11 @@
+state_based_population_garrison_requirement = {
+	required_garrison_factor = PBGR_pop_factor
+}
+state_based_population_garrison_requirement_visible = {
+	remove_trigger = {
+		ROOT = { has_resistance = no }
+		NOT = { has_global_flag = PBGR_force_all_visible }
+	}
+	icon = GFX_PBGR
+	required_garrison_factor = PBGR_pop_factor
+}

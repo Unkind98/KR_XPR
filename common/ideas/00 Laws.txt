@@ -721,7 +721,7 @@ ideas = {
 			cost = 100
 			removal_cost = 60
 			#level = 4
-			visible = { is_ai = no has_idea = civ_budget_3 }
+			visible = { is_ai = no NOT = { has_idea = civ_budget_0 has_idea = civ_budget_1 } }
 			modifier = {
 				political_power_cost = 1
 				research_speed_factor = 0.2
@@ -815,7 +815,7 @@ ideas = {
 			cost = 100
 			removal_cost = 60
 			#level = 4
-			visible = { is_ai = no has_idea = mil_budget_3 }
+			visible = { is_ai = no NOT = { has_idea = mil_budget_0 has_idea = mil_budget_1 } }
 			modifier = {
 				political_power_cost = 1
 				max_command_power_mult = 0.2
@@ -831,6 +831,8 @@ ideas = {
 	}
 	
 	ext_pol = {
+		law = yes
+		use_list_view = yes
 		arsenal_expansion = {
 			picture = SOV_third_five_year_plan_military
 			cost = 100

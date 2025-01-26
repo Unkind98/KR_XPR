@@ -1,0 +1,12 @@
+﻿l_english:
+ RULE_POPULATION_BASED_GARRISON_REQUIREMENTS: "Garrison Size Requirements"
+ RULE_OPTION_RULE_POPULATION_BASED_GARRISON_REQUIREMENTS: "PBGR (INVISIBLE BUT WORKS)"
+ RULE_OPTION_RULE_POPULATION_BASED_GARRISON_REQUIREMENTS_DESC: "A state's garrison requirements depend on its population. States with 2.5 million inhabitants will have the same garrison requirements as in vanilla. The requirement is calculated monthly."
+ RULE_OPTION_RULE_POPULATION_BASED_GARRISON_REQUIREMENTS_VISIBLE: "Population Based Garrision Requirements"
+ RULE_OPTION_RULE_POPULATION_BASED_GARRISON_REQUIREMENTS_VISIBLE_DESC: "Uses Population Based Garrision Requirements. States will display the effect of their population upon their garrison requirements."
+ RULE_OPTION_VANILLA_GARRISON_REQUIREMENTS: "Vanilla Garrison Requirements"
+ RULE_OPTION_VANILLA_GARRISON_REQUIREMENTS_DESC: "State's garrison requirements depend solely on their level of resistance."
+ state_based_population_garrison_requirement: "Population Effect on Garrison Requirement"
+ state_based_population_garrison_requirement_desc: "The state's population affects its garrison size requirement by this much. Calculated monthly."
+ state_based_population_garrison_requirement_visible: "$state_based_population_garrison_requirement$"
+ state_based_population_garrison_requirement_visible_desc: "$state_based_population_garrison_requirement_desc$"
